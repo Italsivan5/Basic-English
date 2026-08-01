@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Let's Learn English! 🎉</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- HOME SCREEN -->
+  <section id="home" class="screen active">
+    <div class="floaty-emoji" style="top:8%; left:6%;">🌈</div>
+    <div class="floaty-emoji" style="top:15%; right:8%;">⭐</div>
+    <div class="floaty-emoji" style="bottom:10%; left:10%;">🎈</div>
+    <div class="floaty-emoji" style="bottom:15%; right:6%;">🦄</div>
+
+    <h1 class="title">Let's Learn English! 🎉</h1>
+    <p class="subtitle">Tap a box to start playing!</p>
+
+    <div class="menu-grid">
+      <button class="menu-btn abc-btn" data-target="abc-grid">
+        <span class="menu-emoji">🔤</span>
+        <span>ABC Cards</span>
+      </button>
+      <button class="menu-btn words-btn" data-target="sentences">
+        <span class="menu-emoji">📖</span>
+        <span>Words &amp; Sentences</span>
+      </button>
+      <button class="menu-btn numbers-btn" data-target="numbers">
+        <span class="menu-emoji">🔢</span>
+        <span>Numbers 1-10</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ABC GRID SCREEN -->
+  <section id="abc-grid" class="screen">
+    <button class="back-btn" data-target="home">⬅ Back</button>
+    <h2 class="section-title">Pick a Letter! 🔤</h2>
+    <div class="letter-grid" id="letterGrid"></div>
+  </section>
+
+  <!-- ABC CARD SCREEN -->
+  <section id="abc-card" class="screen">
+    <button class="back-btn" data-target="abc-grid">⬅ Back</button>
+    <div class="card-stage">
+      <button class="nav-arrow left" id="abcPrev">◀</button>
+      <div class="flashcard" id="abcCard">
+        <div class="card-emoji" id="abcEmoji">🍎</div>
+        <div class="card-letters" id="abcLetter">Aa</div>
+        <div class="card-word" id="abcWord">Apple</div>
+        <button class="say-btn" id="abcSay">🔊 Say it!</button>
+      </div>
+      <button class="nav-arrow right" id="abcNext">▶</button>
+    </div>
+    <div class="progress-dots" id="abcProgress"></div>
+  </section>
+
+  <!-- SENTENCES SCREEN -->
+  <section id="sentences" class="screen">
+    <button class="back-btn" data-target="home">⬅ Back</button>
+    <h2 class="section-title">Words &amp; Sentences 📖</h2>
+    <div class="card-stage">
+      <button class="nav-arrow left" id="sentPrev">◀</button>
+      <div class="flashcard sentence-card" id="sentCard">
+        <div class="card-emoji" id="sentEmoji">🐱</div>
+        <div class="card-sentence" id="sentText">I see a cat.</div>
+        <button class="say-btn" id="sentSay">🔊 Say it!</button>
+      </div>
+      <button class="nav-arrow right" id="sentNext">▶</button>
+    </div>
+    <div class="progress-dots" id="sentProgress"></div>
+  </section>
+
+  <!-- NUMBERS SCREEN -->
+  <section id="numbers" class="screen">
+    <button class="back-btn" data-target="home">⬅ Back</button>
+    <h2 class="section-title">Numbers 1-10 🔢</h2>
+    <div class="card-stage">
+      <button class="nav-arrow left" id="numPrev">◀</button>
+      <div class="flashcard number-card" id="numCard">
+        <div class="card-emoji" id="numEmoji">⭐</div>
+        <div class="card-letters" id="numDigit">1</div>
+        <div class="card-word" id="numWord">One</div>
+        <button class="say-btn" id="numSay">🔊 Say it!</button>
+      </div>
+      <button class="nav-arrow right" id="numNext">▶</button>
+    </div>
+    <div class="progress-dots" id="numProgress"></div>
+  </section>
+
+  <!-- CELEBRATION OVERLAY -->
+  <div id="celebration" class="celebration hidden">
+    <div class="celebration-box">
+      <div class="celebration-emoji">🏆🎉🌟</div>
+      <p>Great job! You did it!</p>
+      <button class="say-btn" id="celebrationClose">Yay!</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
