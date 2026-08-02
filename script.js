@@ -1,59 +1,59 @@
 // ===== DATA =====
 const alphabetData = [
-  { letter: "A", word: "Apple", emoji: "🍎" },
-  { letter: "B", word: "Ball", emoji: "⚽" },
-  { letter: "C", word: "Cat", emoji: "🐱" },
-  { letter: "D", word: "Dog", emoji: "🐶" },
-  { letter: "E", word: "Elephant", emoji: "🐘" },
-  { letter: "F", word: "Fish", emoji: "🐟" },
-  { letter: "G", word: "Grapes", emoji: "🍇" },
-  { letter: "H", word: "Hat", emoji: "🎩" },
-  { letter: "I", word: "Ice cream", emoji: "🍦" },
-  { letter: "J", word: "Juice", emoji: "🧃" },
-  { letter: "K", word: "Kite", emoji: "🪁" },
-  { letter: "L", word: "Lion", emoji: "🦁" },
-  { letter: "M", word: "Moon", emoji: "🌙" },
-  { letter: "N", word: "Nest", emoji: "🪺" },
-  { letter: "O", word: "Orange", emoji: "🍊" },
-  { letter: "P", word: "Pig", emoji: "🐷" },
-  { letter: "Q", word: "Queen", emoji: "👸" },
-  { letter: "R", word: "Rainbow", emoji: "🌈" },
-  { letter: "S", word: "Sun", emoji: "☀️" },
-  { letter: "T", word: "Tiger", emoji: "🐯" },
-  { letter: "U", word: "Umbrella", emoji: "☂️" },
-  { letter: "V", word: "Van", emoji: "🚐" },
-  { letter: "W", word: "Watermelon", emoji: "🍉" },
-  { letter: "X", word: "Xylophone", emoji: "🎼" },
-  { letter: "Y", word: "Yo-yo", emoji: "🪀" },
-  { letter: "Z", word: "Zebra", emoji: "🦓" },
+  { letter: "A", word: "Apple", hebrew: "תפוח", emoji: "🍎" },
+  { letter: "B", word: "Ball", hebrew: "כדור", emoji: "⚽" },
+  { letter: "C", word: "Cat", hebrew: "חתול", emoji: "🐱" },
+  { letter: "D", word: "Dog", hebrew: "כלב", emoji: "🐶" },
+  { letter: "E", word: "Elephant", hebrew: "פיל", emoji: "🐘" },
+  { letter: "F", word: "Fish", hebrew: "דג", emoji: "🐟" },
+  { letter: "G", word: "Grapes", hebrew: "ענבים", emoji: "🍇" },
+  { letter: "H", word: "Hat", hebrew: "כובע", emoji: "🎩" },
+  { letter: "I", word: "Ice cream", hebrew: "גלידה", emoji: "🍦" },
+  { letter: "J", word: "Juice", hebrew: "מיץ", emoji: "🧃" },
+  { letter: "K", word: "Kite", hebrew: "עפיפון", emoji: "🪁" },
+  { letter: "L", word: "Lion", hebrew: "אריה", emoji: "🦁" },
+  { letter: "M", word: "Moon", hebrew: "ירח", emoji: "🌙" },
+  { letter: "N", word: "Nest", hebrew: "קן", emoji: "🪺" },
+  { letter: "O", word: "Orange", hebrew: "תפוז", emoji: "🍊" },
+  { letter: "P", word: "Pig", hebrew: "חזיר", emoji: "🐷" },
+  { letter: "Q", word: "Queen", hebrew: "מלכה", emoji: "👸" },
+  { letter: "R", word: "Rainbow", hebrew: "קשת", emoji: "🌈" },
+  { letter: "S", word: "Sun", hebrew: "שמש", emoji: "☀️" },
+  { letter: "T", word: "Tiger", hebrew: "נמר", emoji: "🐯" },
+  { letter: "U", word: "Umbrella", hebrew: "מטריה", emoji: "☂️" },
+  { letter: "V", word: "Van", hebrew: "ואן", emoji: "🚐" },
+  { letter: "W", word: "Watermelon", hebrew: "אבטיח", emoji: "🍉" },
+  { letter: "X", word: "Xylophone", hebrew: "קסילופון", emoji: "🎼" },
+  { letter: "Y", word: "Yo-yo", hebrew: "יויו", emoji: "🪀" },
+  { letter: "Z", word: "Zebra", hebrew: "זברה", emoji: "🦓" },
 ];
 
 const sentencesData = [
-  { emoji: "🐱", sentence: "I see a cat." },
-  { emoji: "🐶", sentence: "The dog can run." },
-  { emoji: "☀️", sentence: "The sun is hot." },
-  { emoji: "🌈", sentence: "I like the rainbow." },
-  { emoji: "🍎", sentence: "I eat an apple." },
-  { emoji: "🐦", sentence: "The bird can fly." },
-  { emoji: "💧", sentence: "I drink water." },
-  { emoji: "📚", sentence: "I read a book." },
-  { emoji: "🐟", sentence: "The fish can swim." },
-  { emoji: "🏠", sentence: "This is my house." },
-  { emoji: "👩‍👧", sentence: "I love my mom." },
-  { emoji: "🐻", sentence: "The bear is big." },
+  { emoji: "🐱", sentence: "I see a cat.", hebrew: "אני רואה חתול." },
+  { emoji: "🐶", sentence: "The dog can run.", hebrew: "הכלב יכול לרוץ." },
+  { emoji: "☀️", sentence: "The sun is hot.", hebrew: "השמש חמה." },
+  { emoji: "🌈", sentence: "I like the rainbow.", hebrew: "אני אוהב את הקשת." },
+  { emoji: "🍎", sentence: "I eat an apple.", hebrew: "אני אוכל תפוח." },
+  { emoji: "🐦", sentence: "The bird can fly.", hebrew: "הציפור יכולה לעוף." },
+  { emoji: "💧", sentence: "I drink water.", hebrew: "אני שותה מים." },
+  { emoji: "📚", sentence: "I read a book.", hebrew: "אני קורא ספר." },
+  { emoji: "🐟", sentence: "The fish can swim.", hebrew: "הדג יכול לשחות." },
+  { emoji: "🏠", sentence: "This is my house.", hebrew: "זה הבית שלי." },
+  { emoji: "👩‍👧", sentence: "I love my mom.", hebrew: "אני אוהב את אמא שלי." },
+  { emoji: "🐻", sentence: "The bear is big.", hebrew: "הדוב גדול." },
 ];
 
 const numbersData = [
-  { digit: 1, word: "One", emoji: "⭐" },
-  { digit: 2, word: "Two", emoji: "⭐⭐" },
-  { digit: 3, word: "Three", emoji: "⭐⭐⭐" },
-  { digit: 4, word: "Four", emoji: "⭐⭐⭐⭐" },
-  { digit: 5, word: "Five", emoji: "⭐⭐⭐⭐⭐" },
-  { digit: 6, word: "Six", emoji: "⭐⭐⭐⭐⭐⭐" },
-  { digit: 7, word: "Seven", emoji: "⭐⭐⭐⭐⭐⭐⭐" },
-  { digit: 8, word: "Eight", emoji: "⭐⭐⭐⭐⭐⭐⭐⭐" },
-  { digit: 9, word: "Nine", emoji: "⭐⭐⭐⭐⭐⭐⭐⭐⭐" },
-  { digit: 10, word: "Ten", emoji: "⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐" },
+  { digit: 1, word: "One", hebrew: "אחת", emoji: "⭐" },
+  { digit: 2, word: "Two", hebrew: "שתיים", emoji: "⭐⭐" },
+  { digit: 3, word: "Three", hebrew: "שלוש", emoji: "⭐⭐⭐" },
+  { digit: 4, word: "Four", hebrew: "ארבע", emoji: "⭐⭐⭐⭐" },
+  { digit: 5, word: "Five", hebrew: "חמש", emoji: "⭐⭐⭐⭐⭐" },
+  { digit: 6, word: "Six", hebrew: "שש", emoji: "⭐⭐⭐⭐⭐⭐" },
+  { digit: 7, word: "Seven", hebrew: "שבע", emoji: "⭐⭐⭐⭐⭐⭐⭐" },
+  { digit: 8, word: "Eight", hebrew: "שמונה", emoji: "⭐⭐⭐⭐⭐⭐⭐⭐" },
+  { digit: 9, word: "Nine", hebrew: "תשע", emoji: "⭐⭐⭐⭐⭐⭐⭐⭐⭐" },
+  { digit: 10, word: "Ten", hebrew: "עשר", emoji: "⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐" },
 ];
 
 const tileColors = [
@@ -62,13 +62,65 @@ const tileColors = [
 ];
 
 // ===== SPEECH =====
-function speak(text) {
+// Prefer natural-sounding online voices (Google/Microsoft) over robotic default ones.
+let bestEnglishVoice = null;
+let bestHebrewVoice = null;
+
+function pickBestVoice(langPrefix, preferredNames) {
+  const voices = window.speechSynthesis.getVoices();
+  const matchingVoices = voices.filter((v) => v.lang && v.lang.toLowerCase().startsWith(langPrefix));
+  if (!matchingVoices.length) return null;
+
+  for (const name of preferredNames) {
+    const match = matchingVoices.find((v) => v.name.includes(name));
+    if (match) return match;
+  }
+
+  return matchingVoices[0];
+}
+
+function refreshVoices() {
+  bestEnglishVoice = pickBestVoice("en", [
+    "Google US English",
+    "Microsoft Aria Online",
+    "Microsoft Jenny Online",
+    "Microsoft Guy Online",
+    "Samantha",
+  ]);
+  bestHebrewVoice = pickBestVoice("he", [
+    "Google עברית",
+    "Microsoft Hila Online",
+    "Microsoft Asaf Online",
+    "Carmit",
+  ]);
+}
+
+if ("speechSynthesis" in window) {
+  refreshVoices();
+  window.speechSynthesis.addEventListener("voiceschanged", refreshVoices);
+}
+
+function speak(text, lang = "en-US") {
+  if (!("speechSynthesis" in window)) return null;
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = lang;
+  utter.voice = lang === "he-IL" ? bestHebrewVoice : bestEnglishVoice;
+  utter.rate = 0.95;
+  utter.pitch = 1.05;
+  window.speechSynthesis.speak(utter);
+  return utter;
+}
+
+// Speaks the Hebrew translation first, then the English word/sentence.
+function speakBilingual(hebrewText, englishText) {
   if (!("speechSynthesis" in window)) return;
   window.speechSynthesis.cancel();
-  const utter = new SpeechSynthesisUtterance(text);
-  utter.rate = 0.85;
-  utter.pitch = 1.1;
-  window.speechSynthesis.speak(utter);
+  const hebrewUtter = speak(hebrewText, "he-IL");
+  if (hebrewUtter) {
+    hebrewUtter.onend = () => speak(englishText, "en-US");
+  } else {
+    speak(englishText, "en-US");
+  }
 }
 
 // ===== NAVIGATION =====
@@ -126,7 +178,10 @@ function buildDeck({ data, prevBtn, nextBtn, progressEl, render, sayText, sayBtn
     update();
   });
 
-  sayBtn.addEventListener("click", () => speak(sayText(data[index])));
+  sayBtn.addEventListener("click", () => {
+    const text = sayText(data[index]);
+    speakBilingual(text.he, text.en);
+  });
 
   update();
   return {
@@ -151,7 +206,7 @@ alphabetData.forEach((item, i) => {
 
     clearTimeout(letterGridSpeechTimer);
     speak(item.letter);
-    letterGridSpeechTimer = setTimeout(() => speak(item.word), 10000);
+    letterGridSpeechTimer = setTimeout(() => speakBilingual(item.hebrew, item.word), 10000);
   });
   letterGrid.appendChild(tile);
 });
@@ -163,7 +218,7 @@ const abcDeck = buildDeck({
   nextBtn: document.getElementById("abcNext"),
   progressEl: document.getElementById("abcProgress"),
   sayBtn: document.getElementById("abcSay"),
-  sayText: (item) => item.word,
+  sayText: (item) => ({ en: item.word, he: item.hebrew }),
   render: (item) => {
     document.getElementById("abcEmoji").textContent = item.emoji;
     document.getElementById("abcLetter").textContent = `${item.letter}${item.letter.toLowerCase()}`;
@@ -178,7 +233,7 @@ buildDeck({
   nextBtn: document.getElementById("sentNext"),
   progressEl: document.getElementById("sentProgress"),
   sayBtn: document.getElementById("sentSay"),
-  sayText: (item) => item.sentence,
+  sayText: (item) => ({ en: item.sentence, he: item.hebrew }),
   render: (item) => {
     document.getElementById("sentEmoji").textContent = item.emoji;
     document.getElementById("sentText").textContent = item.sentence;
@@ -192,7 +247,7 @@ buildDeck({
   nextBtn: document.getElementById("numNext"),
   progressEl: document.getElementById("numProgress"),
   sayBtn: document.getElementById("numSay"),
-  sayText: (item) => item.word,
+  sayText: (item) => ({ en: item.word, he: item.hebrew }),
   render: (item) => {
     document.getElementById("numEmoji").textContent = item.emoji;
     document.getElementById("numDigit").textContent = item.digit;
