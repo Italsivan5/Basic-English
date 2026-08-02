@@ -143,7 +143,7 @@ document.getElementById("celebrationClose").addEventListener("click", () => {
 });
 
 // ===== GENERIC CARD DECK BUILDER =====
-function buildDeck({ data, prevBtn, nextBtn, progressEl, render, sayText, sayBtn }) {
+function buildDeck({ data, prevBtn, nextBtn, progressEl, render, sayText, sayBtn, onShow }) {
   let index = 0;
 
   progressEl.innerHTML = "";
@@ -160,14 +160,15 @@ function buildDeck({ data, prevBtn, nextBtn, progressEl, render, sayText, sayBtn
     });
   }
 
-  function update() {
+  function update(triggerAudio) {
     render(data[index]);
     updateProgress();
+    if (triggerAudio && onShow) onShow(data[index]);
   }
 
   prevBtn.addEventListener("click", () => {
     index = (index - 1 + data.length) % data.length;
-    update();
+    update(true);
   });
 
   nextBtn.addEventListener("click", () => {
@@ -175,7 +176,7 @@ function buildDeck({ data, prevBtn, nextBtn, progressEl, render, sayText, sayBtn
       celebrate();
     }
     index = (index + 1) % data.length;
-    update();
+    update(true);
   });
 
   sayBtn.addEventListener("click", () => {
@@ -183,17 +184,16 @@ function buildDeck({ data, prevBtn, nextBtn, progressEl, render, sayText, sayBtn
     speakBilingual(text.he, text.en);
   });
 
-  update();
+  update(false);
   return {
     goTo(i) {
       index = i;
-      update();
+      update(true);
     },
   };
 }
 
 // ===== ABC LETTER GRID =====
-let letterGridSpeechTimer = null;
 const letterGrid = document.getElementById("letterGrid");
 alphabetData.forEach((item, i) => {
   const tile = document.createElement("button");
@@ -203,13 +203,19 @@ alphabetData.forEach((item, i) => {
   tile.addEventListener("click", () => {
     showScreen("abc-card");
     abcDeck.goTo(i);
-
-    clearTimeout(letterGridSpeechTimer);
-    speak(item.letter);
-    letterGridSpeechTimer = setTimeout(() => speakBilingual(item.hebrew, item.word), 10000);
   });
   letterGrid.appendChild(tile);
 });
+
+// Says the letter right away, then the word (Hebrew, then English) a few seconds later.
+const WORD_DELAY_MS = 6000;
+let letterSpeechTimer = null;
+function announceLetterCard(item) {
+  clearTimeout(letterSpeechTimer);
+  window.speechSynthesis.cancel();
+  speak(item.letter);
+  letterSpeechTimer = setTimeout(() => speakBilingual(item.hebrew, item.word), WORD_DELAY_MS);
+}
 
 // ===== ABC CARD DECK =====
 const abcDeck = buildDeck({
@@ -219,6 +225,7 @@ const abcDeck = buildDeck({
   progressEl: document.getElementById("abcProgress"),
   sayBtn: document.getElementById("abcSay"),
   sayText: (item) => ({ en: item.word, he: item.hebrew }),
+  onShow: announceLetterCard,
   render: (item) => {
     document.getElementById("abcEmoji").textContent = item.emoji;
     document.getElementById("abcLetter").textContent = `${item.letter}${item.letter.toLowerCase()}`;
