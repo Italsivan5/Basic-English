@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>English Vocabulary with Hebrew Translation</title>
+<style>
+  /* Basic page look: soft background, centered column */
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #f1f5fb;
+    color: #1f2a44;
+  }
+  header {
+    background: #2f5fd0;
+    color: #fff;
+    padding: 18px 16px;
+    text-align: center;
+  }
+  header h1 { margin: 0 0 4px; font-size: 1.6rem; }
+  header p { margin: 0; opacity: .9; }
+  main { max-width: 900px; margin: 0 auto; padding: 16px; }
+
+  /* Search box and buttons */
+  .controls { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+  .controls input[type="search"] {
+    flex: 1 1 220px; padding: 10px 12px; font-size: 1rem;
+    border: 1px solid #b9c6e4; border-radius: 8px;
+  }
+  .controls button {
+    padding: 10px 14px; font-size: .95rem; cursor: pointer;
+    border: 1px solid #2f5fd0; background: #fff; color: #2f5fd0; border-radius: 8px;
+  }
+  .controls button.active { background: #2f5fd0; color: #fff; }
+
+  /* One block per unit */
+  section { margin-bottom: 26px; }
+  section h2 { margin: 0 0 8px; color: #2f5fd0; border-bottom: 2px solid #c9d6f3; padding-bottom: 4px; }
+
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+  th { background: #e3eafa; text-align: left; padding: 8px 10px; font-size: .9rem; }
+  td { padding: 8px 10px; border-top: 1px solid #e6ebf5; vertical-align: top; }
+  td.word { font-weight: 700; white-space: nowrap; }
+  td.def { color: #55607a; font-size: .92rem; }
+  td.heb { direction: rtl; text-align: right; font-size: 1.1rem; font-weight: 600; color: #b3331f; }
+  th.heb-h { text-align: right; }
+  .speak { border: none; background: none; cursor: pointer; font-size: 1rem; padding: 0 4px; }
+
+  /* "Quiz mode": Hebrew is blurred until you click it */
+  body.quiz td.heb span { filter: blur(6px); cursor: pointer; transition: filter .15s; }
+  body.quiz td.heb span.shown { filter: none; }
+
+  .count { color: #55607a; font-size: .9rem; margin: 0 0 12px; }
+  footer { text-align: center; color: #6b7690; font-size: .85rem; padding: 18px 8px 28px; }
+
+  @media (max-width: 600px) {
+    td.def, th.def-h { display: none; } /* hide English definition on small phones */
+    td.word { white-space: normal; }
+  }
+  @media print { .controls { display: none; } body { background: #fff; } }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>📖 English Vocabulary — מילון עברי</h1>
+  <p>All words from the Vocabulary Review Guide and the workbook, with Hebrew translation</p>
+</header>
+
+<main>
+  <div class="controls">
+    <input type="search" id="search" placeholder="Search English or Hebrew… / חיפוש" />
+    <button id="quizBtn" title="Hide the Hebrew; click a word to reveal it">Quiz mode</button>
+  </div>
+  <p class="count" id="count"></p>
+  <div id="content"></div>
+</main>
+
+<footer>Created by Ital Sivan</footer>
+
+<script>
+/* Each word is written as: [English word, simple English meaning, Hebrew translation] */
+const UNITS = [
+  { title: "Unit 1", words: [
+    ["age (n)", "How old someone or something is.", "גיל"],
+    ["dislike (v)", "To not like something or someone.", "לא לאהוב, לא לחבב"],
+    ["all of a sudden", "Quickly and unexpectedly; all at once.", "פתאום, בבת אחת"],
+    ["dramatic", "Exciting, full of emotion, or sudden.", "דרמטי, מרשים"],
+    ["all on (your) own", "Alone, without help from anyone else.", "לבד, בכוחות עצמך"],
+    ["either way", "In both cases; no matter which option is chosen.", "בכל מקרה"],
+    ["all over the place", "Everywhere; messy or scattered.", "בכל מקום; מפוזר, בבלגן"],
+    ["extraordinary", "Very unusual, special, or amazing.", "יוצא דופן, מדהים"],
+    ["behind", "In back of something or someone.", "מאחורי"],
+    ["findings", "Information or answers discovered from research.", "ממצאים"],
+    ["bell", "A small object that makes a ringing sound.", "פעמון, צלצול"],
+    ["fit (adj)", "Healthy and strong from exercise.", "בכושר, בריא"],
+    ["blow up (v)", "To explode, or to fill with air/gas.", "להתפוצץ; לנפח"],
+    ["focus (n)", "The main point of attention or interest.", "מוקד, מיקוד"],
+    ["bold", "Brave, confident, or easy to notice.", "נועז, בולט"],
+    ["get away with", "To do something bad without being punished.", "לצאת בלי עונש"],
+    ["bring up", "To mention a topic, or to raise a child.", "להעלות נושא; לגדל ילד"],
+    ["give up", "To stop trying.", "לוותר"],
+    ["burst into tears", "To suddenly start crying hard.", "לפרוץ בבכי"],
+    ["go out", "To leave home for fun or social activities.", "לצאת (לבלות)"],
+    ["calculate", "To figure out using numbers or math.", "לחשב"],
+    ["grown-up (n)", "An adult.", "מבוגר"],
+    ["check out (v)", "To look at or examine something interesting.", "לבדוק, להציץ ב..."],
+    ["hold up (v)", "To delay or slow down someone or something.", "לעכב"],
+    ["collector", "A person who gathers and keeps certain items.", "אספן"],
+    ["hurry up", "To move or do something faster.", "למהר"],
+    ["come first", "To be the most important thing.", "לבוא לפני הכול, להיות הכי חשוב"],
+    ["identical", "Exactly the same.", "זהה"],
+    ["debt", "Money that you owe to someone.", "חוב"],
+    ["immoral", "Wrong, unfair, or bad according to morals.", "לא מוסרי"],
+    ["demanding (adj)", "Needing a lot of time, effort, or attention.", "תובעני, דורש מאמץ"],
+    ["in actual fact", "In reality; actually.", "למעשה, בעצם"],
+    ["determine", "To decide or figure something out for sure.", "לקבוע"],
+    ["issue (n)", "A problem or topic that people discuss.", "סוגיה, נושא"],
+    ["development", "Growth or the process of becoming better.", "התפתחות, פיתוח"],
+    ["knowledge", "Things you know and understand.", "ידע"],
+    ["misunderstand", "To fail to understand correctly.", "לא להבין נכון"],
+    ["show up", "To arrive somewhere.", "להופיע, להגיע"],
+    ["mix up (v)", "To confuse two things or people.", "לבלבל, לערבב"],
+    ["sidewalk", "A paved path for pedestrians beside a street.", "מדרכה"],
+    ["modest", "Humble; not showing off.", "צנוע"],
+    ["significant", "Important, large, or meaningful.", "משמעותי, חשוב"],
+    ["mystery", "Something secret, unknown, or hard to explain.", "תעלומה, מסתורין"],
+    ["similarity", "A way in which two things are alike.", "דמיון, קווי דמיון"],
+    ["nevertheless", "Even so; despite that.", "למרות זאת, בכל זאת"],
+    ["sound angry", "To voice or speak in a way that shows anger.", "להישמע כועס"],
+    ["not believe (your) ears", "To be very surprised by something you hear.", "לא להאמין למשמע אוזניים"],
+    ["special offer", "A deal or discount on a product or service.", "מבצע"],
+    ["on a diet", "Eating specific foods to lose weight or stay healthy.", "בדיאטה"],
+    ["split up (v)", "To divide or end a relationship or group.", "להיפרד; לפצל"],
+    ["on the one hand... on the other hand", "Used to compare two different or opposite ideas.", "מצד אחד... מצד שני"],
+    ["strangely enough", "Surprisingly; introducing an unexpected fact.", "באופן מוזר, מוזר ככל שיהיה"],
+    ["personality", "The character traits that make a person unique.", "אישיות"],
+    ["sum up", "To briefly state the main points.", "לסכם"],
+    ["put up with", "To accept or tolerate a difficult situation.", "לסבול, להשלים עם"],
+    ["take a risk", "To do something that could have a bad result.", "לקחת סיכון"],
+    ["reason (n)", "Why something happens or why someone acts.", "סיבה"],
+    ["tie up", "To fasten or bind something with rope/string.", "לקשור"],
+    ["reassure", "To make someone feel less worried.", "להרגיע, לעודד"],
+    ["tip (n)", "A piece of advice, or extra money for service.", "עצה; טיפ"],
+    ["recycle", "To process used materials so they can be reused.", "למחזר"],
+    ["to start with", "At the beginning; as a first step.", "להתחלה, קודם כול"],
+    ["refund (n)", "Money returned to you when returning an item.", "החזר כספי"],
+    ["uncomfortable", "Not feeling pleasant, physically or emotionally.", "לא נוח"],
+    ["relationship", "The connection between two or more people.", "מערכת יחסים, קשר"],
+    ["undressed", "Not wearing clothes.", "ערום, לא לבוש"],
+    ["remain calm", "To stay relaxed and peaceful in a situation.", "לשמור על קור רוח"],
+    ["unemployed", "Without a job.", "מובטל"],
+    ["research (n)", "Careful study to find new facts or information.", "מחקר"],
+    ["unexpected", "Happening without warning; surprising.", "לא צפוי"],
+    ["rob (v)", "To steal money or property from a person/place.", "לשדוד"],
+    ["unknown", "Not famous, clear, or recognized.", "לא ידוע, לא מוכר"]
+  ]},
+  { title: "Unit 2", words: [
+    ["accept", "To say yes to something or agree to take it.", "לקבל, להסכים"],
+    ["crucial", "Very important or essential.", "קריטי, חיוני"],
+    ["adopt", "To legally take a child, or choose a new idea.", "לאמץ"],
+    ["custom", "A tradition or habit common to a group.", "מנהג"],
+    ["afterwards", "Later; after something else has happened.", "לאחר מכן"],
+    ["delay (v)", "To make something happen later than planned.", "לעכב, לדחות"],
+    ["against", "Touching, facing, or opposed to something.", "נגד"],
+    ["demonstrate", "To show clearly how something works.", "להדגים"],
+    ["aircraft", "Any vehicle that flies (plane or helicopter).", "כלי טיס"],
+    ["develop", "To grow, change, or create over time.", "לפתח, להתפתח"],
+    ["angel", "A spiritual being or a very kind person.", "מלאך"],
+    ["development", "The process of growing or building.", "התפתחות, פיתוח"],
+    ["announce", "To tell people something officially.", "להכריז, להודיע"],
+    ["due to", "Because of.", "בגלל, עקב"],
+    ["announcement", "An official statement or message.", "הודעה, הכרזה"],
+    ["duty-free", "Goods sold without government taxes.", "פטור ממכס"],
+    ["apology", "Saying sorry for doing something wrong.", "התנצלות"],
+    ["ensure", "To make sure that something happens.", "להבטיח, לוודא"],
+    ["appreciate", "To be grateful or thankful for something.", "להעריך, להיות אסיר תודה"],
+    ["equal", "The same in quantity, size, or value.", "שווה"],
+    ["approach (v)", "To come closer to someone or something.", "להתקרב"],
+    ["eventually", "In the end; after a long time.", "בסופו של דבר"],
+    ["around", "In a circle, near, or in various places.", "מסביב, בסביבות"],
+    ["excuse (n)", "A reason given to explain a mistake.", "תירוץ"],
+    ["arrange", "To set up or plan something in order.", "לארגן, לסדר"],
+    ["foreign", "From a country other than your own.", "זר, של חו\"ל"],
+    ["as you know", "Phrase used to remind of a known fact.", "כידוע לך"],
+    ["forgive", "To stop feeling angry at a mistake.", "לסלוח"],
+    ["aspect", "One part or feature of a situation.", "היבט"],
+    ["go viral", "To become popular quickly on the internet.", "להפוך לויראלי"],
+    ["assess", "To evaluate, test, or judge something.", "להעריך, לבחון"],
+    ["hardly", "Barely; almost not at all.", "בקושי"],
+    ["assessment", "A test, evaluation, or judgment.", "הערכה, מבחן"],
+    ["headache", "A pain in your head.", "כאב ראש"],
+    ["attend", "To go to or be present at an event/class.", "להשתתף, להגיע ל..."],
+    ["improve", "To make or become better.", "לשפר, להשתפר"],
+    ["brief", "Very short in time or length.", "קצר, תמציתי"],
+    ["manage", "To succeed, or to control/lead a team.", "להצליח; לנהל"],
+    ["cage", "An enclosure with bars to hold animals.", "כלוב"],
+    ["management", "The group controlling an organization.", "הנהלה, ניהול"],
+    ["cancel", "To decide an event will not happen.", "לבטל"],
+    ["mean (adj)", "Unkind or unpleasant.", "רע, מרושע"],
+    ["clear (adj)", "Easy to see, hear, or understand.", "ברור"],
+    ["myth", "An ancient story or widely held false belief.", "מיתוס"],
+    ["clearly", "In a clear, obvious way.", "בבירור"],
+    ["noticeboard", "A wall board for posted messages.", "לוח מודעות"],
+    ["colleague", "A person you work with.", "עמית לעבודה"],
+    ["nowadays", "At the present time; these days.", "בימינו, כיום"],
+    ["complain", "To say you are unhappy about something.", "להתלונן"],
+    ["nowhere", "Not in or to any place.", "בשום מקום"],
+    ["convenient", "Easy to use or suitable for plans.", "נוח, מתאים"],
+    ["occasion", "A special event or time.", "אירוע, הזדמנות"],
+    ["odd", "Strange or unusual.", "מוזר"],
+    ["photography", "The art or practice of taking photos.", "צילום"],
+    ["original", "First, or unique and creative.", "מקורי"],
+    ["post (v)", "To publish online or send mail.", "לפרסם; לשלוח בדואר"],
+    ["pass through", "To travel through a place briefly.", "לעבור דרך"],
+    ["previous", "Happening before something else.", "קודם, קודם לכן"],
+    ["passport", "Official travel document from government.", "דרכון"],
+    ["rather", "Fairly, or preferably.", "די, למדי; מעדיף"],
+    ["perform", "To act, sing, or execute for an audience.", "להופיע, לבצע"],
+    ["relatively", "Compared to something else.", "יחסית"],
+    ["result in", "To cause a specific outcome.", "לגרום ל..., להוביל ל..."],
+    ["tissue", "Soft paper for wiping, or cell material.", "ממחטת נייר; רקמה"],
+    ["ride (n)", "A journey in a vehicle or park attraction.", "נסיעה; מתקן (בפארק)"],
+    ["to be honest", "To tell the truth.", "למען האמת"],
+    ["rough", "Not smooth, or difficult/harsh.", "מחוספס; קשה"],
+    ["tourist", "A person visiting a place for pleasure.", "תייר"],
+    ["route", "The path or direction taken to get somewhere.", "מסלול, דרך"],
+    ["traveler", "A person who is making a journey.", "נוסע, מטייל"],
+    ["safe", "Free from danger or harm.", "בטוח"],
+    ["update (v)", "To give latest info or bring up to date.", "לעדכן"]
+  ]},
+  { title: "Workbook Vocabulary Game (Band I)", words: [
+    ["hungry", "Wanting to eat food.", "רעב"],
+    ["interesting", "Fun or exciting to learn about.", "מעניין"],
+    ["invite", "To ask someone to come to an event.", "להזמין"],
+    ["late", "After the expected time.", "מאוחר, באיחור"],
+    ["mistake", "Something done wrong by accident.", "טעות"],
+    ["month", "One of the 12 parts of a year.", "חודש"],
+    ["music", "Sounds made by singing or playing instruments.", "מוזיקה"],
+    ["neighbor", "Someone who lives near you.", "שכן"],
+    ["nice", "Kind, pleasant, or good.", "נחמד, נעים"],
+    ["open", "Not closed.", "פתוח; לפתוח"],
+    ["parents", "Your mother and father.", "הורים"],
+    ["perhaps", "Maybe; possibly.", "אולי"],
+    ["plan", "An idea for how to do something.", "תוכנית"],
+    ["problem", "Something difficult that needs solving.", "בעיה"],
+    ["question", "Something you ask to get information.", "שאלה"],
+    ["quiet", "Making very little noise.", "שקט"],
+    ["ready", "Prepared to do something.", "מוכן"],
+    ["remember", "To keep something in your memory.", "לזכור"]
+  ]}
+];
+
+const content = document.getElementById("content");
+const countLabel = document.getElementById("count");
+
+// Builds the tables on screen. "filter" is the text typed in the search box.
+function render(filter) {
+  const q = filter.trim().toLowerCase();
+  let shown = 0;
+  let html = "";
+  UNITS.forEach((unit) => {
+    // Keep only the words that match the search (English, meaning, or Hebrew)
+    const rows = unit.words.filter((w) => !q || w.join(" ").toLowerCase().includes(q));
+    if (!rows.length) return;
+    shown += rows.length;
+    html += `<section><h2>${unit.title} (${rows.length})</h2><table>
+      <tr><th>English</th><th class="def-h def">Meaning</th><th class="heb-h heb">עברית</th></tr>`;
+    rows.forEach((w) => {
+      html += `<tr>
+        <td class="word">${w[0]} <button class="speak" data-say="${w[0].replace(/\(.*?\)/g, "").trim()}" title="Listen">🔊</button></td>
+        <td class="def">${w[1]}</td>
+        <td class="heb" dir="rtl"><span>${w[2]}</span></td>
+      </tr>`;
+    });
+    html += `</table></section>`;
+  });
+  content.innerHTML = html || "<p>No words found.</p>";
+  countLabel.textContent = `${shown} words`;
+}
+
+// Search box: redraw the tables every time the text changes
+document.getElementById("search").addEventListener("input", (e) => render(e.target.value));
+
+// Quiz mode button: turns the Hebrew blur on/off
+const quizBtn = document.getElementById("quizBtn");
+quizBtn.addEventListener("click", () => {
+  document.body.classList.toggle("quiz");
+  quizBtn.classList.toggle("active");
+  document.querySelectorAll("td.heb span.shown").forEach((s) => s.classList.remove("shown"));
+});
+
+// Clicks inside the tables: the speaker button reads the word aloud,
+// and in quiz mode clicking the Hebrew reveals it
+content.addEventListener("click", (e) => {
+  const say = e.target.dataset.say;
+  if (say) {
+    const u = new SpeechSynthesisUtterance(say);
+    u.lang = "en-US";
+    speechSynthesis.cancel();
+    speechSynthesis.speak(u);
+    return;
+  }
+  if (e.target.matches("td.heb span")) e.target.classList.toggle("shown");
+});
+
+render("");
+</script>
+</body>
+</html>
